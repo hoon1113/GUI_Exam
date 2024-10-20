@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 /**
  * 계산기 만들기
  * @author 2021011930 김기훈
- * @version 0.0.3
+ * @version 0.0.4
  */
 public class Calculate extends JFrame {
 	JPanel p2;
@@ -72,12 +72,61 @@ public class Calculate extends JFrame {
 					t1.setText(t1.getText().substring(0, t1.getText().length() -1));
 					// 텍스트의 길이를 뒤에서부터 1개씩 줄이는 원리
 				}
+				if (cammand.equals("/") || cammand.equals("*") || cammand.equals("-") || cammand.equals("+") || cammand.equals("%")) {
+					operator = cammand;
+					switch(operator) {
+					case "+": // + 눌렀을때 result 안에 이전에 누른 값을 저장 하라 / 텍스트에 공백 출력
+						result = Double.parseDouble(t1.getText()); // double 로 t1에 들어온 값 저장
+						t1.setText("");
+						break;
+					case "-":
+						result = Double.parseDouble(t1.getText());
+						t1.setText("");
+						break;
+					case "/":
+						result = Double.parseDouble(t1.getText());
+						t1.setText("");
+						break;
+					case "*":
+						result = Double.parseDouble(t1.getText());
+						t1.setText("");
+						break;
+					case "%":
+						result = Double.parseDouble(t1.getText());
+						t1.setText("");
+						break;
+					}
+				}
+				if (cammand.equals("=")) {
+					switch (operator) {
+					case "+": // 덧셈 / 이전에 저장한 result 값에 다음 입력값을 더해라
+						result = result + Double.parseDouble(t1.getText());
+						t1.setText(String.valueOf(result)); // String 값으로 변환
+						break;
+					case "-": // 뺄셈
+						result = result - Double.parseDouble(t1.getText());
+						t1.setText(String.valueOf(result));
+						break;
+					case "*": // 곱셈
+						result = result * Double.parseDouble(t1.getText());
+						t1.setText(String.valueOf(result));
+						break;
+					case "/": // 나눗셈
+						result = result / Double.parseDouble(t1.getText());
+						t1.setText(String.valueOf(result));
+						break;
+					case "%": // 퍼센트 구하는 공식
+						result = result / Double.parseDouble(t1.getText()) * 100;
+						t1.setText(String.valueOf(result) + "%");
+						break;
+					}
+				}
 			});
 			p2.add(b1[i]);
 		}
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 창 종료되면 프로그램 종료
 		this.setVisible(true);
-		this.setResizable(false);
+		this.setResizable(false); // 창크기 조절 X
 	}
 
 	public static void main(String[] args) {
