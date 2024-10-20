@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 /**
  * 계산기 만들기
  * @author 2021011930 김기훈
- * @version 0.0.1
+ * @version 0.0.2
  */
 public class Calculate extends JFrame {
 	JPanel p1; // 상단 패널
@@ -48,12 +48,23 @@ public class Calculate extends JFrame {
 		this.add(p2, "Center"); // 페널 중간에 위치
 		p1.add(t1, "West"); // p1안에서 서쪽에 위치
 		int a = 0; // for 문에서 버튼에 텍스트 값을 차례대로 넣기 위해 만든 변수
+		Color Light_Blue = new Color(30,144,255); // setBackground에 없는 색을 넣기 위함
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 4; j++) {
 				b1[j] = new JButton(btnText1[a]);
 				a += 1;
-				b1[j].setBackground(Color.GRAY);
+				b1[j].setBackground(Color.DARK_GRAY);
 				b1[j].setForeground(Color.white);
+				if (a < 5 || a == 8 || a == 12 || a == 16 || a == 20) {
+					b1[j].setBackground(Color.GRAY);
+				}else if (a == 19) {
+					b1[j].setBackground(Light_Blue);
+					b1[j].setForeground(Color.BLACK);
+				}
+				/**
+				 * if 이용해 디자인 수정. <br>
+				 * 숫자 칸만 진한 회색, 다른 곳은 밝은 회색, = 값은 파랑으로 수정
+				 */
 				p2.add(b1[j]);
 			}
 		}
@@ -62,7 +73,7 @@ public class Calculate extends JFrame {
 		 * 버튼생성은 왼쪽에서 오른쪽, 위에서 아래로 생성 <br>
 		 * 버튼의 색상은 회색, 텍스트 색상은 흰색 <br>
 		 * @see 버튼 중복 생성 블로그 참조 <br>
-		 * https://intunknown.tistory.com/entry/%EC%9E%90%EB%B0%94-GUI-%EB%B2%84%ED%8A%BC-%EB%B0%B0%EC%97%B4%EC%BD%94%EB%93%9C-%EC%A4%91%EB%B3%B5
+		 * @link https://intunknown.tistory.com/entry/%EC%9E%90%EB%B0%94-GUI-%EB%B2%84%ED%8A%BC-%EB%B0%B0%EC%97%B4%EC%BD%94%EB%93%9C-%EC%A4%91%EB%B3%B5
 		 */
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
