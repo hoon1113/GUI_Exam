@@ -2,6 +2,7 @@ package GUI_exam;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -12,7 +13,7 @@ import javax.swing.JTextField;
 /**
  * 계산기 만들기
  * @author 2021011930 김기훈
- * @version 0.0.4
+ * @version 0.0.5
  */
 public class Calculate extends JFrame {
 	JPanel p2;
@@ -33,8 +34,9 @@ public class Calculate extends JFrame {
 		this.setLayout(new BorderLayout(2,2));
 		t1 = new JTextField();
 		t1.setSize(260, 100);
-		t1.setForeground(Color.black); // 왜 안먹히는가?
 		getContentPane().add(t1, BorderLayout.NORTH);
+		t1.setBackground(Color.DARK_GRAY); // 글자 색이 안바껴서 배경색을 바꿈
+		t1.setFont(new Font("Arial", Font.BOLD, 50)); // 글자 크기 키우기
 		t1.setEnabled(false);
 		
 		p2 = new JPanel();
@@ -50,6 +52,7 @@ public class Calculate extends JFrame {
 			b1[i] = new JButton("" + btnText1[i]);
 			b1[i].setBackground(Color.DARK_GRAY);
 			b1[i].setForeground(Color.white);
+			b1[i].setFont(new Font("Arial", Font.BOLD, 15)); // 버튼 글자 크기 키우기
 			if (i < 4 || i == 7 || i == 11 || i == 15 || i == 19) {
 				b1[i].setBackground(Color.GRAY);
 			}else if(i == 18) {
