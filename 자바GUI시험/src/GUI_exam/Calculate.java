@@ -16,7 +16,8 @@ import javax.swing.JTextField;
  * @version 0.0.5
  */
 public class Calculate extends JFrame {
-	JPanel p2;
+	JPanel p1; // 상단 텍스트필드를 넣는 패널
+	JPanel p2; // 하단 버튼넣는 패널
 	String[] btnText1 = { "(", ")", "%", "CE", "7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "0", ".", "=", "+"};
 	/**
 	 * @param String[] btnText1
@@ -25,16 +26,29 @@ public class Calculate extends JFrame {
 	 */
 	JButton[] b1;
 	JTextField t1; // 상단에 들어갈 텍스트 칸 생성
-	double result = 0; // 계산 결과
+	JTextField t2; // 뒤늦게 추가된 식을 보여주는 텍스트필드
+	double result = 0;// 계산 결과
 	String operator; // 연산자
 
 	Calculate() {
 		this.setTitle("계산기");
 		this.setSize(400, 300);
 		this.setLayout(new BorderLayout(2,2));
+		
+		p1 = new JPanel();
+		getContentPane().add(p1, BorderLayout.NORTH);
+		p1.setLayout(new BorderLayout());
+		
+		t2 = new JTextField();
+		p1.add(t2, BorderLayout.NORTH);
+		t2.setBackground(Color.DARK_GRAY);
+		t2.setFont(new Font("Arial", Font.BOLD, 20));
+		t2.setForeground(Color.white);
+		
 		t1 = new JTextField();
 		t1.setSize(260, 100);
-		getContentPane().add(t1, BorderLayout.NORTH);
+		p1.add(t1, BorderLayout.CENTER);
+		
 		t1.setBackground(Color.DARK_GRAY); // 글자 색이 안바껴서 배경색을 바꿈
 		t1.setFont(new Font("Arial", Font.BOLD, 50)); // 글자 크기 키우기
 		t1.setEnabled(false);
@@ -67,12 +81,15 @@ public class Calculate extends JFrame {
 				String cammand = e.getActionCommand();
 				if(cammand.equals("0") || cammand.equals("1") || cammand.equals("2") || cammand.equals("3") || cammand.equals("4") || cammand.equals("5") || cammand.equals("6") || cammand.equals("7") || cammand.equals("8") || cammand.equals("9")) {
 					t1.setText(t1.getText() + cammand);
+					t2.setText(t2.getText() + cammand);
 				} // 0~9 숫자 클릭시 숫자 텍스트에 입력
 				if(cammand.equals(".")) {
 					t1.setText(t1.getText() + ".");
+					t2.setText(t2.getText() + ".");
 				} // 점 클릭시 텍스트에 점 입력
 				if(cammand.equals("CE")) {
 					t1.setText(t1.getText().substring(0, t1.getText().length() -1));
+					t2.setText(t2.getText().substring(0, t2.getText().length() -1));
 					// 텍스트의 길이를 뒤에서부터 1개씩 줄이는 원리
 				}
 				if (cammand.equals("/") || cammand.equals("*") || cammand.equals("-") || cammand.equals("+") || cammand.equals("%")) {
@@ -81,22 +98,28 @@ public class Calculate extends JFrame {
 					case "+": // + 눌렀을때 result 안에 이전에 누른 값을 저장 하라 / 텍스트에 공백 출력
 						result = Double.parseDouble(t1.getText()); // double 로 t1에 들어온 값 저장
 						t1.setText("");
+						
+						t2.setText(result + "+"); // t2칸에는 숫자 없어지지 않고 뒤에 연산자도 적어줌
 						break;
 					case "-":
 						result = Double.parseDouble(t1.getText());
 						t1.setText("");
+						t2.setText(result + "-");
 						break;
 					case "/":
 						result = Double.parseDouble(t1.getText());
 						t1.setText("");
+						t2.setText(result + "/");
 						break;
 					case "*":
 						result = Double.parseDouble(t1.getText());
 						t1.setText("");
+						t2.setText(result + "*");
 						break;
 					case "%":
 						result = Double.parseDouble(t1.getText());
 						t1.setText("");
+						t2.setText(result + "%");
 						break;
 					}
 				}
