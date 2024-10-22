@@ -18,7 +18,7 @@ import javax.swing.JTextField;
 public class Calculate extends JFrame {
 	JPanel p1; // 상단 텍스트필드를 넣는 패널
 	JPanel p2; // 하단 버튼넣는 패널
-	String[] btnText1 = { "(", ")", "%", "CE", "7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "0", ".", "=", "+"};
+	String[] btnText1 = { "AE", "", "%", "CE", "7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "0", ".", "=", "+"};
 	/**
 	 * @param String[] btnText1
 	 * <br>
@@ -43,7 +43,9 @@ public class Calculate extends JFrame {
 		p1.add(t2, BorderLayout.NORTH);
 		t2.setBackground(Color.DARK_GRAY);
 		t2.setFont(new Font("Arial", Font.BOLD, 20));
-		t2.setForeground(Color.white);
+		t2.setHorizontalAlignment(JTextField.RIGHT); // 오른쪽 정렬
+		t2.setForeground(Color.white); 
+		t2.setEnabled(false); // 사용장 작성 금지
 		
 		t1 = new JTextField();
 		t1.setSize(260, 100);
@@ -51,7 +53,8 @@ public class Calculate extends JFrame {
 		
 		t1.setBackground(Color.DARK_GRAY); // 글자 색이 안바껴서 배경색을 바꿈
 		t1.setFont(new Font("Arial", Font.BOLD, 50)); // 글자 크기 키우기
-		t1.setEnabled(false);
+		t1.setHorizontalAlignment(JTextField.RIGHT); // 오른쪽 정렬
+		t1.setEnabled(false); // 사용자 작성 금지
 		
 		p2 = new JPanel();
 		getContentPane().add(p2, BorderLayout.CENTER);
@@ -92,13 +95,18 @@ public class Calculate extends JFrame {
 					t2.setText(t2.getText().substring(0, t2.getText().length() -1));
 					// 텍스트의 길이를 뒤에서부터 1개씩 줄이는 원리
 				}
+				if(cammand.equals("AE")) {
+					t1.setText("");
+					t2.setText("");
+					result = 0;
+					// 텍스트 값 모두 없애기
+				}
 				if (cammand.equals("/") || cammand.equals("*") || cammand.equals("-") || cammand.equals("+") || cammand.equals("%")) {
 					operator = cammand;
 					switch(operator) {
 					case "+": // + 눌렀을때 result 안에 이전에 누른 값을 저장 하라 / 텍스트에 공백 출력
 						result = Double.parseDouble(t1.getText()); // double 로 t1에 들어온 값 저장
 						t1.setText("");
-						
 						t2.setText(result + "+"); // t2칸에는 숫자 없어지지 않고 뒤에 연산자도 적어줌
 						break;
 					case "-":
@@ -151,7 +159,7 @@ public class Calculate extends JFrame {
 			p2.add(b1[i]);
 		}
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 창 종료되면 프로그램 종료
-		this.setVisible(true);
+		this.setVisible(true); // 화면 보여주기 
 		this.setResizable(false); // 창크기 조절 X
 	}
 
