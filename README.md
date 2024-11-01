@@ -49,5 +49,5 @@
 - [**연산구현**] (https://velog.io/@merci/JAVA-GUI%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EA%B0%84%EB%8B%A8%ED%95%9C-%EA%B3%84%EC%82%B0%EA%B8%B0-%EA%B5%AC%ED%98%84) <br>
 사칙연산 작동 방식의 기본 아이디어 제공 (switch 사용)
 
--**반복연산**<br>
+- [**반복연산**] <br>
 ChatGPT에 반복연산이 안되는 이유 파악, 단순화 된 아이디어 제공 받음
