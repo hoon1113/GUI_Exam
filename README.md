@@ -41,3 +41,13 @@
 - **`onButtonClick`**: 숫자 입력, 연산자, 특수 기능에 대한 버튼 동작 처리.
 - **`performCalculation`**: 입력받은 연산자에 따른 연산 수행.
 - **`clearAll`**: 새로운 계산을 할 수 있도록 모든 값 제거.
+
+## 도움 <br>
+- [**디자인**] (https://www.google.com/search?q=%EA%B3%84%EC%82%B0%EA%B8%B0&oq=%EA%B3%84%EC%82%B0%EA%B8%B0&gs_lcrp=EgZjaHJvbWUqDwgAEEUYOxiDARixAxiABDIPCAAQRRg7GIMBGLEDGIAEMg0IARAuGIMBGLEDGIAEMgoIAhAAGLEDGIAEMg0IAxAAGIMBGLEDGIAEMg0IBBAuGIMBGLEDGIAEMg0IBRAuGK8BGMcBGIAEMgYIBhBFGDwyBggHEEUYPdIBCDExODFqMGo3qAIIsAIB&sourceid=chrome&ie=UTF-8) <br>
+계산기 모양의 기본
+
+- [**연산구현**] (https://velog.io/@merci/JAVA-GUI%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-%EA%B0%84%EB%8B%A8%ED%95%9C-%EA%B3%84%EC%82%B0%EA%B8%B0-%EA%B5%AC%ED%98%84) <br>
+사칙연산 작동 방식의 기본 아이디어 제공 (switch 사용)
+
+-**반복연산**<br>
+ChatGPT에 반복연산이 안되는 이유 파악, 단순화 된 아이디어 제공 받음
