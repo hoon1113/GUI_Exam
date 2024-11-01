@@ -14,6 +14,7 @@ import javax.swing.JTextField;
  * @author 김기훈
  * @version 0.0.7
  * @see ChatGPT를 이용해 중복 계산을 할 수 있도록 도움을 받음
+ * @see chrome 검색창에 '계산기'를 검색했을때 가장 상단에 노출되는 계산기 디자인을 모방함
  */
 public class Calculate extends JFrame {
 	JPanel p1;  // 상단 텍스트 필드용 패널
@@ -23,6 +24,9 @@ public class Calculate extends JFrame {
 	JTextField t1, t2;
 	double result = 0;
 	String operator = "";
+	/**
+	 * @param isNewOperation 연산결과 중복되기 않게 방지, 새로운 연산이 시작되는 것을 알림
+	 */
 	boolean isNewOperation = true;
 	/**
 	 * 기본 생성자: 계산기의 초기 설정과 GUI 요소 생성.
@@ -62,6 +66,9 @@ public class Calculate extends JFrame {
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
+		/**
+		 * @param setResizable 사용자가 마음대로 창크기 조절하는것을 막음
+		 */
 		this.setResizable(false);
 	}
 
@@ -105,7 +112,7 @@ public class Calculate extends JFrame {
 	}
 
 	/**
-	 * 버튼 클릭 시 호출되는 메서드로, 입력 값에 따라 연산을 수행.
+	 * 버튼 클릭 시 호출되는 메서드로, 입력 값에 따라 연산 수행.
 	 * @param command 클릭된 버튼의 텍스트 (연산자 또는 숫자)
 	 */
 	private void onButtonClick(String command) {
@@ -118,7 +125,11 @@ public class Calculate extends JFrame {
 			}
 			t1.setText(t1.getText() + command);
 			t2.setText(t2.getText() + command);
-		} else if (command.equals("CE")) {
+		} 
+		/**
+		 * @param if (!currentText.isEmpty()) {}는 currentText가 비어있지 않다면 안에 내용 실행
+		 */
+		else if (command.equals("CE")) {
 			if (!currentText.isEmpty()) {
 				t1.setText(currentText.substring(0, currentText.length() - 1));
 				t2.setText(t2.getText().substring(0, t2.getText().length() - 1));
@@ -142,7 +153,7 @@ public class Calculate extends JFrame {
 	}
 
 	/**
-	 * 계산기의 모든 텍스트 필드와 연산자 초기화.
+	 * 계산기의 모든 텍스트 필드와 연산자 제거.
 	 */
 	private void clearAll() {
 		t1.setText("");
