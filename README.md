@@ -26,3 +26,4 @@
 ## 디자인 <br>
 
 ![image](https://github.com/user-attachments/assets/2c67e313-7d03-4b1e-9b8c-59a9b1c266c4)
+![image](https://github.com/user-attachments/assets/b5182886-5d0c-49a3-af2a-0da4b29f7adf)
