@@ -24,6 +24,6 @@
 위 메서드를 보면 알 수 있듯이 사칙연산을 입력받으면 이전 결과값에 operand 즉 다음 입력값을 연산자 모양에 맞게 연산하게 된다.<br>
 나누기 같은 경우 0 값이 들어오면 잘못된 계산이라고 알려주기 위해 NaN값이 출력된다.<br>
 ## 디자인 <br>
-
 ![image](https://github.com/user-attachments/assets/2c67e313-7d03-4b1e-9b8c-59a9b1c266c4)
-![image](https://github.com/user-attachments/assets/b5182886-5d0c-49a3-af2a-0da4b29f7adf)
+![image](https://github.com/user-attachments/assets/1dab60a7-bf7f-4e78-811b-844fdd6dbb1b) <br>
+위 이미지에서 왼쪽은 내가 만든 계산기, 오른쪽은 크롬 구글에 '계산기'를 검색하면 상단에 나오는 계산기의 일부분이다.
