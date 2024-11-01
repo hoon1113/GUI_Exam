@@ -11,160 +11,168 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
- * 계산기 만들기
- * @author 2021011930 김기훈
- * @version 0.0.5
+ * @author 김기훈
+ * @version 0.0.7
+ * @see ChatGPT를 이용해 중복 계산을 할 수 있도록 도움을 받음
  */
 public class Calculate extends JFrame {
-	JPanel p1; // 상단 텍스트필드를 넣는 패널
-	JPanel p2; // 하단 버튼넣는 패널
-	String[] btnText1 = { "AE", "", "%", "CE", "7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "0", ".", "=", "+"};
+	JPanel p1;  // 상단 텍스트 필드용 패널
+	JPanel p2;  // 하단 버튼용 패널
+	String[] btnText1 = { "AE", "", "%", "CE", "7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "0", ".", "=", "+" };
+	JButton[] buttons;
+	JTextField t1, t2;
+	double result = 0;
+	String operator = "";
+	boolean isNewOperation = true;
 	/**
-	 * @param String[] btnText1
-	 * <br>
-	 * 버튼 안에 들어갈 문자를 String 배열을 이용해 만들었음
+	 * 기본 생성자: 계산기의 초기 설정과 GUI 요소 생성.
 	 */
-	JButton[] b1;
-	JTextField t1; // 상단에 들어갈 텍스트 칸 생성
-	JTextField t2; // 뒤늦게 추가된 식을 보여주는 텍스트필드
-	double result = 0;// 계산 결과
-	String operator; // 연산자
-
 	Calculate() {
 		this.setTitle("계산기");
 		this.setSize(400, 300);
-		this.setLayout(new BorderLayout(2,2));
-		
-		p1 = new JPanel();
+		this.setLayout(new BorderLayout(2, 2));
+
+		// 텍스트 필드를 담는 패널 초기화
+		p1 = new JPanel(new BorderLayout());
 		getContentPane().add(p1, BorderLayout.NORTH);
-		p1.setLayout(new BorderLayout());
-		
-		t2 = new JTextField();
+
+		// 상단 텍스트 필드 생성 및 설정
+		t2 = createTextField(20, Color.DARK_GRAY);
 		p1.add(t2, BorderLayout.NORTH);
-		t2.setBackground(Color.DARK_GRAY);
-		t2.setFont(new Font("Arial", Font.BOLD, 20));
-		t2.setHorizontalAlignment(JTextField.RIGHT); // 오른쪽 정렬
-		t2.setForeground(Color.white); 
-		t2.setEnabled(false); // 사용장 작성 금지
-		
-		t1 = new JTextField();
-		t1.setSize(260, 100);
+
+		// 메인 텍스트 필드 생성 및 설정
+		t1 = createTextField(50, Color.DARK_GRAY);
 		p1.add(t1, BorderLayout.CENTER);
-		
-		t1.setBackground(Color.DARK_GRAY); // 글자 색이 안바껴서 배경색을 바꿈
-		t1.setFont(new Font("Arial", Font.BOLD, 50)); // 글자 크기 키우기
-		t1.setHorizontalAlignment(JTextField.RIGHT); // 오른쪽 정렬
-		t1.setEnabled(false); // 사용자 작성 금지
-		
-		p2 = new JPanel();
+
+		// 버튼 패널 초기화 및 설정
+		p2 = new JPanel(new GridLayout(5, 4, 2, 2));
 		getContentPane().add(p2, BorderLayout.CENTER);
-		p2.setLayout(new GridLayout(5, 3, 2, 2));
+		
+		// 없는 색을 만들기 위한 객체 생성
+		Color Light_Blue = new Color(30, 144, 255);
+		buttons = new JButton[20];
 		/**
-		 * GridLayout안에 가로 3줄 새로 5줄 칸 형성, 칸 사이 간격 2, 2
-		 */		
-		Color Light_Blue = new Color(30,144,255); // setBackground에 없는 색을 넣기 위함
-		b1  = new JButton[20]; // 버튼 만들기 시작
-		for (int i = 0; i < b1.length; i++) {
-			// 버튼의 길이 만큼 반복해서 버튼 생성, 칸은 GridLayout이용해서 만들었음
-			b1[i] = new JButton("" + btnText1[i]);
-			b1[i].setBackground(Color.DARK_GRAY);
-			b1[i].setForeground(Color.white);
-			b1[i].setFont(new Font("Arial", Font.BOLD, 15)); // 버튼 글자 크기 키우기
-			if (i < 4 || i == 7 || i == 11 || i == 15 || i == 19) {
-				b1[i].setBackground(Color.GRAY);
-			}else if(i == 18) {
-				b1[i].setBackground(Light_Blue);
-				b1[i].setForeground(Color.black);
-			}
-			/**
-			 *  if 문 이용해서 디자인함
-			 */
-			b1[i].addActionListener(e -> {
-				// 이벤트 넣기 시작
-				String cammand = e.getActionCommand();
-				if(cammand.equals("0") || cammand.equals("1") || cammand.equals("2") || cammand.equals("3") || cammand.equals("4") || cammand.equals("5") || cammand.equals("6") || cammand.equals("7") || cammand.equals("8") || cammand.equals("9")) {
-					t1.setText(t1.getText() + cammand);
-					t2.setText(t2.getText() + cammand);
-				} // 0~9 숫자 클릭시 숫자 텍스트에 입력
-				if(cammand.equals(".")) {
-					t1.setText(t1.getText() + ".");
-					t2.setText(t2.getText() + ".");
-				} // 점 클릭시 텍스트에 점 입력
-				if(cammand.equals("CE")) {
-					t1.setText(t1.getText().substring(0, t1.getText().length() -1));
-					t2.setText(t2.getText().substring(0, t2.getText().length() -1));
-					// 텍스트의 길이를 뒤에서부터 1개씩 줄이는 원리
-				}
-				if(cammand.equals("AE")) {
-					t1.setText("");
-					t2.setText("");
-					result = 0;
-					// 텍스트 값 모두 없애기
-				}
-				if (cammand.equals("/") || cammand.equals("*") || cammand.equals("-") || cammand.equals("+") || cammand.equals("%")) {
-					operator = cammand;
-					switch(operator) {
-					case "+": // + 눌렀을때 result 안에 이전에 누른 값을 저장 하라 / 텍스트에 공백 출력
-						result = Double.parseDouble(t1.getText()); // double 로 t1에 들어온 값 저장
-						t1.setText("");
-						t2.setText(result + "+"); // t2칸에는 숫자 없어지지 않고 뒤에 연산자도 적어줌
-						break;
-					case "-":
-						result = Double.parseDouble(t1.getText());
-						t1.setText("");
-						t2.setText(result + "-");
-						break;
-					case "/":
-						result = Double.parseDouble(t1.getText());
-						t1.setText("");
-						t2.setText(result + "/");
-						break;
-					case "*":
-						result = Double.parseDouble(t1.getText());
-						t1.setText("");
-						t2.setText(result + "*");
-						break;
-					case "%":
-						result = Double.parseDouble(t1.getText());
-						t1.setText("");
-						t2.setText(result + "%");
-						break;
-					}
-				}
-				if (cammand.equals("=")) {
-					switch (operator) {
-					case "+": // 덧셈 / 이전에 저장한 result 값에 다음 입력값을 더해라
-						result = result + Double.parseDouble(t1.getText());
-						t1.setText(String.valueOf(result)); // String 값으로 변환
-						break;
-					case "-": // 뺄셈
-						result = result - Double.parseDouble(t1.getText());
-						t1.setText(String.valueOf(result));
-						break;
-					case "*": // 곱셈
-						result = result * Double.parseDouble(t1.getText());
-						t1.setText(String.valueOf(result));
-						break;
-					case "/": // 나눗셈
-						result = result / Double.parseDouble(t1.getText());
-						t1.setText(String.valueOf(result));
-						break;
-					case "%": // 퍼센트 구하는 공식
-						result = result / Double.parseDouble(t1.getText()) * 100;
-						t1.setText(String.valueOf(result) + "%");
-						break;
-					}
-				}
-			});
-			p2.add(b1[i]);
+		 * 버튼 배열 생성 및 이벤트 리스너 설정
+		 * 반복문을 이용해 버튼 생성
+		 */
+		for (int i = 0; i < buttons.length; i++) {
+			buttons[i] = createButton(btnText1[i], i, Light_Blue);
+			p2.add(buttons[i]);
 		}
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 창 종료되면 프로그램 종료
-		this.setVisible(true); // 화면 보여주기 
-		this.setResizable(false); // 창크기 조절 X
+
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);
+		this.setResizable(false);
 	}
 
+	/**
+	 * 주어진 설정으로 JTextField를 생성.
+	 * 배경색, 폰트, 폰트색, 텍스트필드 위치 설정, 사용자 입력 제한이 설정 되어있음
+	 * @return 설정된 JTextField 객체
+	 */
+	private JTextField createTextField(int fontSize, Color backgroundColor) {
+		JTextField textField = new JTextField();
+		textField.setFont(new Font("Arial", Font.BOLD, fontSize));
+		textField.setBackground(backgroundColor);
+		textField.setForeground(Color.WHITE);
+		textField.setHorizontalAlignment(JTextField.RIGHT);
+		textField.setEnabled(false);
+		return textField;
+	}
+
+	/**
+	 * 주어진 텍스트와 색상으로 JButton 생성 및 설정.
+	 * 버튼 폰트, 폰트색, 버튼 생성, 각 특수한 위치의 버튼 색 지정, 지정위치 버튼의 색 그리고 폰트와 배경색 지정
+	 * @param Light_Blue 특수 색상 (Light Blue)
+	 * @return 설정된 JButton 객체
+	 */
+	private JButton createButton(String text, int index, Color Light_Blue) {
+		JButton button = new JButton(text);
+		button.setFont(new Font("Arial", Font.BOLD, 15));
+		button.setForeground(Color.WHITE);
+
+		if (index < 4 || index == 7 || index == 11 || index == 15 || index == 19) {
+			button.setBackground(Color.GRAY);
+		} else if (index == 18) {
+			button.setBackground(Light_Blue);
+			button.setForeground(Color.BLACK);
+		} else {
+			button.setBackground(Color.DARK_GRAY);
+		}
+
+		button.addActionListener(e -> onButtonClick(text));
+		return button;
+	}
+
+	/**
+	 * 버튼 클릭 시 호출되는 메서드로, 입력 값에 따라 연산을 수행.
+	 * @param command 클릭된 버튼의 텍스트 (연산자 또는 숫자)
+	 */
+	private void onButtonClick(String command) {
+		String currentText = t1.getText();
+
+		if (Character.isDigit(command.charAt(0)) || command.equals(".")) {
+			if (isNewOperation) {
+				t1.setText("");
+				isNewOperation = false;
+			}
+			t1.setText(t1.getText() + command);
+			t2.setText(t2.getText() + command);
+		} else if (command.equals("CE")) {
+			if (!currentText.isEmpty()) {
+				t1.setText(currentText.substring(0, currentText.length() - 1));
+				t2.setText(t2.getText().substring(0, t2.getText().length() - 1));
+			}
+		} else if (command.equals("AE")) {
+			clearAll();
+		} else if ("+-*/%".contains(command)) {
+			if (!operator.isEmpty()) {
+				performCalculation();
+			} else {
+				result = Double.parseDouble(currentText);
+			}
+			operator = command;
+			t2.setText(result + " " + operator);
+			isNewOperation = true;
+		} else if (command.equals("=")) {
+			performCalculation();
+			operator = "";
+			isNewOperation = true;
+		}
+	}
+
+	/**
+	 * 계산기의 모든 텍스트 필드와 연산자 초기화.
+	 */
+	private void clearAll() {
+		t1.setText("");
+		t2.setText("");
+		result = 0;
+		operator = "";
+		isNewOperation = true;
+	}
+
+	/**
+	 * 설정된 연산자에 따라 연산을 수행하고 결과를 표시.
+	 */
+	private void performCalculation() {
+		double operand = t1.getText().isEmpty() ? 0 : Double.parseDouble(t1.getText());
+		switch (operator) {
+		case "+" -> result += operand;
+		case "-" -> result -= operand;
+		case "*" -> result *= operand;
+		case "/" -> result = (operand == 0) ? Double.NaN : result / operand;
+		case "%" -> result = result * operand / 100;
+		}
+		t1.setText(String.valueOf(result));
+		t2.setText(String.valueOf(result));
+		isNewOperation = true;
+	}
+
+	/**
+	 * 메인 메서드. 계산기를 실행.
+	 */
 	public static void main(String[] args) {
-		Calculate f = new Calculate();
+		new Calculate();
 	}
-
 }
